@@ -1,6 +1,6 @@
 const catchAsync=require('../utils/asyncFun');
 const appError=require('../utils/appError')
-
+const appFeatures=require('../utils/appFeuture')
 exports.createOne=(Model)=>catchAsync(
 
  async (req, res, next) => {
@@ -23,19 +23,24 @@ exports.createOne=(Model)=>catchAsync(
 
 
 exports.deleteOne=(Model)=>catchAsync(async(req,res,next)=>{
+    console.log('entered delete part')
      const deletedInstance= await Model.findByIdAndDelete(req.params.id);
-    
+     console.log(deletedInstance)
      if(!deletedInstance) {
       const error =new appError("there is no user with this id to delete",404)
-     
+      console.log("have to enter")
+      console.log(error)
          next(error)
       
      }
-     res.status(200).json({
+     else{
+         res.status(200).json({
        status:"success",
        data:null,
        userdeletedis:deletedInstance.name
      })
+     }
+     
 })
 
 
@@ -47,7 +52,7 @@ exports.updateOne=(Model)=>catchAsync((async(req,res,next)=>{
    const updatedInstance=await Model.findByIdAndUpdate(req.params.id,req.body,{new:true,runValidators:true})
  
      if(!updatedInstance){
-      return next(new AppError("there is no data with this info to update",404))
+      return next(new appError("there is no data with this info to update",404))
      }
 
      res.status(200).json({
@@ -60,7 +65,7 @@ exports.getOne=(Model)=>catchAsync(async(req,res,next)=>{
   // console.log("entered get one ")
     const GetedInstance = await Model.findById(req.params.id);
     if(!GetedInstance){
-      return next(new AppError("there is no data with this is"),404)
+      return next(new appError("there is no data with this is"),404)
     }
 
     res.status(200).json({
@@ -89,3 +94,7 @@ exports.getAll=(Model)=>catchAsync(async(req,res,next)=>{
             instanceFiltered
         })
 })
+
+
+
+{{{{{{{{{{}}}}}}}}}

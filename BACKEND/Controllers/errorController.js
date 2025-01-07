@@ -2,6 +2,7 @@ const AppError = require("../utils/appError");
 
 const errorController = (error, req, res, next) => {
   // Ensure statusCode is always set (defaults to 500)
+  console.log('entered error handler')
   error.statusCode = error.statusCode || 500;
   error.status = error.status || "error";
 
