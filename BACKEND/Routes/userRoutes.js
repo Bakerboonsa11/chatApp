@@ -5,6 +5,9 @@ const Router = express.Router();
   // AUTHENTICATIONS ROUTES
 Router.route('/signUp')
 .post(authencicationController.signUp)
+Router.route('/signIn')
+.post(authencicationController.signIn)
+
 Router.route('/')
   .post(userController.createUser)
   .get(userController.findAll)

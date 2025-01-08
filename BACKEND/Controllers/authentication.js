@@ -49,3 +49,22 @@ exports.signUp =catchAsync(async(req,res,next)=>{
 })
 
 
+  exports.signIn=catchAsync(async(req,res,next)=>{
+   const {email,password}=req.body
+  
+  if(!email||!password) {
+    return next(new appError("please provide the email or password",400))
+  }
+ const user=await User.findOne({email}).select("+password")
+
+ if(!user || !await user.correctPassword(password,user.password)){
+     return next(new appError("incorrct password or email",400))
+ }
+  // console.log(user, "is UserActivation")
+
+ createToken(user,res)
+
+})
+
+
+

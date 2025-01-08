@@ -67,10 +67,10 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-// // Instance method to check password validity
-// userSchema.methods.correctPassword = async function (candidatePassword, userPassword) {
-//   return await bcrypt.compare(candidatePassword, userPassword);
-// };
+// Instance method to check password validity
+userSchema.methods.correctPassword = async function (candidatePassword, userPassword) {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
 
 // Create the User model
 const User = mongoose.model('User', userSchema);
