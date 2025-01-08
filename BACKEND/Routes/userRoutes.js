@@ -1,7 +1,10 @@
 const express = require('express');
 const userController =require('../Controllers/userControllers')
+const authencicationController=require('../Controllers/authentication')
 const Router = express.Router();
-
+  // AUTHENTICATIONS ROUTES
+Router.route('/signUp')
+.post(authencicationController.signUp)
 Router.route('/')
   .post(userController.createUser)
   .get(userController.findAll)
