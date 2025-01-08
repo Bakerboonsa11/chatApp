@@ -10,7 +10,7 @@ Router.route('/signIn')
 
 Router.route('/')
   .post(userController.createUser)
-  .get(userController.findAll)
+  .get(authencicationController.protect,userController.findAll)
 
 Router.route('/:id')
 .get(userController.getUser)

@@ -1,6 +1,7 @@
 const catchAsync=require('../utils/asyncFun');
 const appError= require('../utils/appError')
 const jwt =require('jsonwebtoken');
+const {promisify}=require('util')
 const User = require('../model/userModel');
 
 const signInToken=(id)=>{
@@ -68,3 +69,58 @@ exports.signUp =catchAsync(async(req,res,next)=>{
 
 
 
+exports.protect= catchAsync(async(req,res,next)=>{
+    console.log('entered the protect one ')
+   let token;
+   // check if the header exist and start with bearer
+ 
+  //  console.log('protect is wrunnung')
+  //  console.log(req.headers.cookie)
+  //  console.log(req.cookies.jwt)
+if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+  token = req.headers.authorization.split(' ')[1];
+  // console.log("cookie is from header")
+}
+else if(req.cookies.jwt){
+  // console.log("jwt is from cookie")
+   token=req.cookies.jwt
+}
+
+console.log('the token is ',token)
+
+if (!token || token === 'null') {
+
+  return next(new appError('You are not logged in! Please log in to get access.', 401));
+}
+ 
+    // console.log("the token is ",token)
+   // verify the token 
+   const decoded= await promisify(jwt.verify)(token,process.env.JWTSECRETWORD)
+  //  console.log(decoded)
+   // check weather a user is still exist 
+   const freshUser= await User.findById(decoded.id)
+  //  console.log("the fresh user is ",freshUser)
+   if(!freshUser){
+      return next(new appError("the user blonging to this token does not exist"),401)
+   }
+  //  console.log(decoded.iat)
+   if(freshUser.ispasswordUpdated(decoded.iat)){
+       return next(new appError("user changed a password pleaselogin again"),401)
+    };
+
+    req.user=freshUser
+   
+   next()
+});
+
+
+exports.strictTo = (...roles) => {
+    // console.log('Entered restrict middleware');
+    return (req, res, next) => {
+        // console.log('User in strictTo:', req.user);
+        if (!req.user || !roles.includes(req.user.roles)) {
+            return next(new AppError('You do not have permission to perform this action', 403));
+        }
+        next();
+    };
+};
