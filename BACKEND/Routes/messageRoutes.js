@@ -7,6 +7,7 @@ Router.route('/')
 .get(messageController.findAll)
 
 Router.route('/:toUser')
+.get(messageController.getMessage)
 .post(messageController.createMessage)
 .patch(messageController.updateMessage)
 .delete(messageController.deleteMessage)

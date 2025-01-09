@@ -15,7 +15,7 @@ exports.createOne=(Model)=>catchAsync(
         data:createdInstance
       });
     }
- 
+
     
 }
 
@@ -24,7 +24,12 @@ exports.createOne=(Model)=>catchAsync(
 
 exports.deleteOne=(Model)=>catchAsync(async(req,res,next)=>{
     console.log('entered delete part')
-     const deletedInstance= await Model.findByIdAndDelete(req.params.id);
+    let id=req.params.id
+  //  console.log(req.files)
+  if(req.params.toUser){
+    id=req.params.toUser
+  }
+     const deletedInstance= await Model.findByIdAndDelete(id);
      console.log(deletedInstance)
      if(!deletedInstance) {
       const error =new appError("there is no user with this id to delete",404)
@@ -47,7 +52,7 @@ exports.deleteOne=(Model)=>catchAsync(async(req,res,next)=>{
 exports.updateOne=(Model)=>catchAsync((async(req,res,next)=>{
   console.log("entered update page")
   console.log(req.params,req.params.toUser)
-  id=req.params.id
+ let id=req.params.id
   //  console.log(req.files)
   if(req.params.toUser){
     id=req.params.toUser
@@ -68,7 +73,12 @@ exports.updateOne=(Model)=>catchAsync((async(req,res,next)=>{
 
 exports.getOne=(Model)=>catchAsync(async(req,res,next)=>{
   // console.log("entered get one ")
-    const GetedInstance = await Model.findById(req.params.id);
+  let id=req.params.id
+  //  console.log(req.files)
+  if(req.params.toUser){
+    id=req.params.toUser
+  }
+    const GetedInstance = await Model.findById(id);
     if(!GetedInstance){
       return next(new appError("there is no data with this is"),404)
     }
