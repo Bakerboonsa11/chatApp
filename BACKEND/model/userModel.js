@@ -53,10 +53,7 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  userName:{
-    type:String,
-    // unique:[true,'user name ,ust be uique'],
-  }
+ 
 });
 
 // Middleware to hash the password before saving

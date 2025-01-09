@@ -45,11 +45,16 @@ exports.deleteOne=(Model)=>catchAsync(async(req,res,next)=>{
 
 
 exports.updateOne=(Model)=>catchAsync((async(req,res,next)=>{
-  // console.log("entered update page")
+  console.log("entered update page")
+  console.log(req.params,req.params.toUser)
+  id=req.params.id
   //  console.log(req.files)
+  if(req.params.toUser){
+    id=req.params.toUser
+  }
    req.body.images=req.files
   //  console.log(req.body)
-   const updatedInstance=await Model.findByIdAndUpdate(req.params.id,req.body,{new:true,runValidators:true})
+   const updatedInstance=await Model.findByIdAndUpdate(id,req.body,{new:true,runValidators:true})
  
      if(!updatedInstance){
       return next(new appError("there is no data with this info to update",404))

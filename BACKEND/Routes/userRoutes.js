@@ -1,8 +1,11 @@
 const express = require('express');
 const userController =require('../Controllers/userControllers')
 const authencicationController=require('../Controllers/authentication')
+const messageRoute=require('../Routes/messageRoutes')
 const Router = express.Router();
   // AUTHENTICATIONS ROUTES
+
+Router.use('/:id/message',messageRoute)
 Router.route('/signUp')
 .post(authencicationController.signUp)
 Router.route('/signIn')
