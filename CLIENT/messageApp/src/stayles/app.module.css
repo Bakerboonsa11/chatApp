@@ -1,0 +1,18 @@
+/* Default padding for small screens (mobile) */
+.img{
+  padding-top: 60px;
+  padding-right: 200px;
+}
+.app-container{
+    border: 1px solid #333;
+    margin: 10px;
+    /* background-color: aqua; */
+}
+
+/* Media query for large screens */
+@media (min-width: 992px) {
+  .img{
+    padding-top: 200px;
+    padding-right: 60px;
+  }
+}
