@@ -7,9 +7,15 @@ const Login = () => {
   // const  = false; // Change this to false to show the signup form instead
   // const [showLogin,setLogin]=useState(false)
  const handlesubmit=(e)=>{
-     e.preventDefault()
+      e.preventDefault()
       alert('the sign up is about to procced ')
-      console.log("the data when we are about to sign up ",store.getState().signUpFormData.name)
+  //  connect the front end to backend end pooint and register the user
+
+  // add credential to both backend and front end 
+
+  // update the authentication state well 
+
+  
  }
   console.log(store);
   console.log(store.getState().authentication)
