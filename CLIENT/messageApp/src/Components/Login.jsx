@@ -15,7 +15,7 @@ const Login = () => {
 
   // update the authentication state well 
 
-  {{{{{{{{{
+  {{{{{{{{
  }
   console.log(store);
   console.log(store.getState().authentication)
