@@ -78,3 +78,10 @@ userSchema.methods.ispasswordUpdated=function(iat){
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
+
+
+
+
+
+
+{{{{{{{{}}}}}}}
