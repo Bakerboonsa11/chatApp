@@ -24,14 +24,7 @@ const userSchema = new mongoose.Schema({
   phoneNumber: {
     type: String,
     required: [true, 'A user must have a phone number'],
-    unique: true,
-    validate: {
-      validator: function (value) {
-        // Validate phone number format (basic example for international numbers)
-        return /^\+?[1-9]\d{1,14}$/.test(value);
-      },
-      message: 'Please provide a valid phone number',
-    },
+    unique: true
   },
   password: {
     type: String,

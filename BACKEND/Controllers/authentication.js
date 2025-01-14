@@ -28,28 +28,42 @@ res.cookie('jwt', token, {
 
 }
 
-exports.signUp =catchAsync(async(req,res,next)=>{
-    // take the info from the user 
-     console.log(req.body)
+// exports.signUp =catchAsync(async(req,res,next)=>{
+//     // take the info from the user 
+//      console.log(req.body)
 
     
      
  
-    // create the elemnt in the data base 
-    const user = await User.create(req.body)
+//     // create the elemnt in the data base 
+//     const user = await User.create(req.body)
 
-    if (!user){
-     return new appError('the user is not created do to some issue',400)
-    }
-    //  create a token for the user and send it to response 
+//     if (!user){
+//      return new appError('the user is not created do to some issue',400)
+//     }
+//     //  create a token for the user and send it to response 
 
-   createToken(User,res)
-
-
-
-})
+//    createToken(User,res)
 
 
+
+// })
+
+exports.signUp = catchAsync(async (req, res, next) => {
+  // 1. Take the information from the user (logging to console for debugging)
+  console.log("data that came to backend is ",req.body);
+
+  // 2. Create the user in the database
+  const user = await User.create(req.body);
+
+  if (!user) {
+    // 3. If user creation fails, throw an error
+    return next(new appError('The user is not created due to some issue', 400));
+  }
+
+  // 4. Create a token for the user and send it in the response
+  createToken(user, res);  // Pass the actual user object instead of User model
+});
   exports.signIn=catchAsync(async(req,res,next)=>{
    const {email,password}=req.body
   

@@ -1,22 +1,37 @@
-const express = require("express");
-const path = require("path");
-const morgan = require("morgan");
-const cookieParser = require("cookie-parser");
+const cors = require('cors');
+const express = require('express');
+const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
+const path = require('path');
 
-// Routers
-const userRoute = require("./Routes/userRoutes");
-// Controllers
-const errorController = require("./Controllers/errorController");
-
+// Initialize Express app
 const App = express();
 
-App.use(morgan("dev"));
-App.use(express.static(`${__dirname}/public`));
+// Configure CORS
+App.use(
+  cors({
+    origin: ['http://localhost:5173'], // Allow requests from your frontend
+    credentials: true, // Allow cookies to be sent
+  })
+);
+
+// Log requests for debugging
+App.use(morgan('dev'));
+
+// Middleware to parse JSON and cookies
 App.use(express.json());
 App.use(cookieParser());
 
-App.use("/api/v1/user", userRoute); // Use the user route for user-related actions
+// Serve static files
+App.use(express.static(`${__dirname}/public`));
 
-App.use(errorController); // Use error handling middleware at the end
+// Routes
+const userRoute = require('./Routes/userRoutes');
+App.use('/api/v1/user', userRoute);
 
+// Catch-all error handler
+const errorController = require('./Controllers/errorController');
+App.use(errorController);
+
+// Export the app
 module.exports = App;

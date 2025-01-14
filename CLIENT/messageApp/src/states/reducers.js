@@ -5,7 +5,8 @@ const initialState = {
 const initialSignUpData={
     name:undefined,
     email:undefined,
-    password:undefined
+    password:"094930Bb",
+    phoneNumber:undefined
 }
 
 
@@ -28,15 +29,17 @@ export const signUpReduces=(state=initialSignUpData,action)=>{
         
           switch(action.type){
             case "UPDATEDATA":
-                alert("data is updated")
+               
                 return {
                     ...state,
                  email:action.payload.email?action.payload.email:state.email ,
                  name:action.payload.name?action.payload.name:state.name,
-                 password:action.payload.password?action.payload.password:state.password
+                 password:action.payload.password?action.payload.password:state.password,
+                 phoneNumber:action.payload.phoneNumber?action.payload.phoneNumber:state.password
                 } 
             
             default:
                 return state
           }
+    console.log(state)
 }
