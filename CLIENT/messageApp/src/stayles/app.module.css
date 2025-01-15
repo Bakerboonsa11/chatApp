@@ -1,18 +1,41 @@
 /* Default padding for small screens (mobile) */
-.img{
+.img {
   padding-top: 60px;
-  padding-right: 200px;
+  padding-right: 10px;
+  padding-left: 10px;
+  width: 100%; /* Make sure the image takes up full width */
+  max-width: 1000px; /* Increased max-width for a bigger image on small screens */
+  height: auto; /* Maintain the aspect ratio */
+  object-fit: cover; /* Ensures the image fills the container without distortion */
 }
-.app-container{
-    border: 1px solid #333;
-    margin: 10px;
-    /* background-color: aqua; */
+
+/* Container to center the image and form */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #333;
+  margin: 10px;
+  padding: 20px; /* Add some padding to the container */
+  background-color: #f8f9fa; /* Light background color for the container */
+  border-radius: 10px; /* Optional: add border radius for rounded corners */
 }
 
 /* Media query for large screens */
 @media (min-width: 992px) {
-  .img{
-    padding-top: 200px;
+  .img {
+    padding-top: 20px;
     padding-right: 60px;
+    padding-left: 60px; /* Adjust left padding for larger screens */
+    max-width: 1200px; /* Increased max-width on larger screens */
+    width: 100%; /* Ensure full width */
+  }
+
+  .app-container {
+    display: flex;
+    flex-direction: row; /* Align form and image side by side on larger screens */
+    justify-content: center;
+    align-items: center;
   }
 }

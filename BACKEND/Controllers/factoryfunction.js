@@ -71,24 +71,34 @@ exports.updateOne=(Model)=>catchAsync((async(req,res,next)=>{
      })
 }))
 
-exports.getOne=(Model)=>catchAsync(async(req,res,next)=>{
-  // console.log("entered get one ")
-  let id=req.params.id
-  //  console.log(req.files)
-  if(req.params.toUser){
-    id=req.params.toUser
-  }
-    const GetedInstance = await Model.findById(id);
-    if(!GetedInstance){
-      return next(new appError("there is no data with this is"),404)
+exports.getOne = (Model, populateOptions) =>
+  catchAsync(async (req, res, next) => {
+    let id = req.params.id;
+
+    // If an alternate ID is specified, use it
+    if (req.params.toUser) {
+      id = req.params.toUser;
+    }
+
+    // Find the document by ID and populate if needed
+    let query = Model.findById(id);
+    if (populateOptions) {
+      console.log('populate option',populateOptions)
+      query = query.populate(populateOptions);
+    }
+
+    const fetchedInstance = await query;
+
+    if (!fetchedInstance) {
+      return next(new appError("No data found with this ID", 404));
     }
 
     res.status(200).json({
-      status:"success",
-      data:GetedInstance
-      
-    })
-})
+      status: "success",
+      data: fetchedInstance,
+    });
+  });
+
 exports.getAll=(Model)=>catchAsync(async(req,res,next)=>{
   
         //  console.log('entered getalll')
