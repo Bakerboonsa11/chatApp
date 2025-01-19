@@ -46,7 +46,7 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
- 
+
 });
 
 // Middleware to hash the password before saving
@@ -56,6 +56,15 @@ userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, 12); // Hash the password
   next();
 });
+
+// userSchema.pre(/^find/, function (next) {
+  
+//   if (!this._populatedContacts) {
+//     this.populate('contacts'); // Populate only if not already populated
+//     this._populatedContacts = true; // Set a flag to prevent recursion
+//   }
+//   next();
+// });
 
 // Instance method to check password validity
 userSchema.methods.correctPassword = async function (candidatePassword, userPassword) {
@@ -74,6 +83,7 @@ userSchema.methods.ispasswordUpdated=function(iat){
   }
     
 }
+
 // Create the User model
 const User = mongoose.model('User', userSchema);
 

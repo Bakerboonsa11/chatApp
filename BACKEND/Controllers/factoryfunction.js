@@ -71,21 +71,21 @@ exports.updateOne=(Model)=>catchAsync((async(req,res,next)=>{
      })
 }))
 
-exports.getOne = (Model, populateOptions) =>
+exports.getOne = (Model) =>
   catchAsync(async (req, res, next) => {
     let id = req.params.id;
-
+    console.log(req.params)
     // If an alternate ID is specified, use it
     if (req.params.toUser) {
       id = req.params.toUser;
     }
-
+    console.log(id)
     // Find the document by ID and populate if needed
-    let query = Model.findById(id);
-    if (populateOptions) {
-      console.log('populate option',populateOptions)
-      query = query.populate(populateOptions);
-    }
+    let query = Model.find({createdFor:id});
+    // if (populateOptions) {
+    //   console.log('populate option',populateOptions)
+    //   query = query.populate(populateOptions);
+    // }
 
     const fetchedInstance = await query;
 

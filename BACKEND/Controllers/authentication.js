@@ -70,7 +70,7 @@ exports.signUp = catchAsync(async (req, res, next) => {
   if(!email||!password) {
     return next(new appError("please provide the email or password",400))
   }
- const user=await User.findOne({email}).select("+password")
+ const user=await User.findOne({email}).select("+password").populate('contacts')
 
  if(!user || !await user.correctPassword(password,user.password)){
      return next(new appError("incorrct password or email",400))

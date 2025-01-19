@@ -75,6 +75,13 @@ const Login = () => {
       );
       console.log('response is ',response)
       alert('Login successful! Redirecting to dashboard.');
+       dispatch({
+        type: 'LOGGEDIN',
+        payload: {
+          user: response.data.user,
+          token: response.data.token,
+        },
+      });
       navigate('/dashboard');
     } catch (error) {
       if (error.response) {

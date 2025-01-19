@@ -7,8 +7,8 @@ Router.route('/')
 .get(messageController.findAll)
 
 Router.route('/:toUser')
-.get(messageController.getMessage)
-.post(messageController.createMessage)
+.get(messageController.currentActiveUserMessage)
+.post(messageController.currentMessages)
 .patch(messageController.updateMessage)
 .delete(messageController.deleteMessage)
 module.exports=Router

@@ -16,8 +16,8 @@ Router.route('/')
   .get(userController.findAll)
 
 Router.route('/:id')
-.get(userController.getUser)
-
+.get(authencicationController.protect,userController.getUser)
+.post(userController.addContact)
 .patch(userController.updateUser)
 .delete(userController.deleteUser)
 
